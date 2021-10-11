@@ -2,8 +2,7 @@ from Cryptodome import Random
 import pickle
 from Cryptodome.Cipher import AES
 import base64
-import sys
-import os
+
 
   # name of file in which key is stored
 KEY_LENGTH = 32  # bytes

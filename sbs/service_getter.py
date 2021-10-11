@@ -1,13 +1,12 @@
 from __future__ import print_function
 import pickle
-import os
 from googleapiclient.discovery import build
 from google_auth_oauthlib.flow import InstalledAppFlow
 import google.auth.transport.requests as requests
+from sbs.config import *
 
 creds = None
 
-from config import *
 
 
 # The file token.pickle stores the user's access and refresh tokens, and is

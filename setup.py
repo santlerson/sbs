@@ -5,7 +5,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 setuptools.setup(
     name="sbs-santlerson",
-    version="1.1.1",
+    version="1.1.8",
     author="Shmoosey Antlerson",
     author_email="shmooseyantlerson@gmail.com",
     description="A tool for creating secure and encrypted backups on Google Drive",
@@ -20,10 +20,10 @@ setuptools.setup(
         "License :: OSI Approved :: MIT License",
         "Operating System :: OS Independent",
     ],
-    package_dir={"": "src"},
-    packages=setuptools.find_packages(where="src"),
+    package_dir={"": "sbs"},
+    packages=setuptools.find_packages(where="sbs"),
     python_requires=">=3.6",
     entry_points={
-        'console_scripts': ['sbs=src.sbs:main'],
+        'console_scripts': ['sbs=sbs.sbs:main'],
     }
 )

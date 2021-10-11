@@ -1,12 +1,10 @@
-from values import CHUNK_SIZE
-from stoof import Cryptologor
+from sbs.stoof import Cryptologor
 import json
 from time import ctime
 from io import BytesIO
 from googleapiclient.http import MediaIoBaseDownload, MediaIoBaseUpload
 from tqdm import tqdm
-from sha import digest
-from values import *
+from sbs.values import *
 
 
 class Backup:
@@ -84,7 +82,7 @@ class Backup:
         return bin_search(self.get_digest_list(), digest, key=lambda file: file.get("digest"))
 
     def find_file_by_path(self, path: str):
-        by_path= bin_search(self.get_files_list_deprecated(), path)
+        by_path= bin_search(self.get_files_list(), path)
         if by_path: return by_path
         return None
 

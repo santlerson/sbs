@@ -7,18 +7,18 @@ from googleapiclient.errors import HttpError
 from google.auth.exceptions import *
 from io import BytesIO
 from tqdm import tqdm
-from stoof import Cryptologor
+from sbs.stoof import Cryptologor
 import time
 import json
 import random
 from Cryptodome.Hash import SHA256
 import base64
-from sha import digest
+from sbs.sha import digest
 import httplib2
-from service_getter import get_service
-from backup import Backup
+from sbs.service_getter import get_service
+from sbs.backup import Backup
 
-from values import *
+from sbs.values import *
 
 from threading import Thread
 
@@ -245,8 +245,9 @@ class FileManager:
         file_size = 0
         for backup in backups:
             if os.path.normpath(backup.source) == os.path.normpath(
-                    dir_path) and backup.get_files_list() is not None:
+                    dir_path) and backup.get_files_list():
                 break
+
         print("")
         log_file.write("Beginning file check\n")
         for root, dirs, files in os.walk("."):
@@ -318,7 +319,7 @@ class FileManager:
                 log_file.write("Beginning backup of size {}\n".format(file_size))
                 for file in file_list:
                     try:
-                        digest, pieces, size = self.upload_file(file, log_file, folder_id, parent_id=config.parent_id,
+                        digest, pieces, size = self.upload_file(file, log_file, folder_id,
                                                                 bar=bar)
                         json_list.append({
                             "source": file,

@@ -1,7 +1,7 @@
-from file import File
-from colors import *
-from file_manager import *
-from backup import *
+from sbs.file import File
+from sbs.colors import *
+from sbs.file_manager import *
+from sbs.backup import *
 
 
 class Navigator:

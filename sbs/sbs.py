@@ -1,19 +1,24 @@
+import os.path
+
 import click
-from file_manager import *
-from config import *
-import os
-from navigator import Navigator
+from sbs.file_manager import *
+from sbs.config import *
+from sbs.navigator import Navigator
 
 
 @click.group()
 @click.option("--config", "-c", default=get_data_dir() / "config/config.json", help="Path to config file")
+@click.option("--verbose/--quiet", "-v", default=False, help="Verbose")
 @click.pass_context
-def cli(context, config):
+def cli(context, config, verbose):
     context.ensure_object(dict)
     try:
         context.obj["config"] = Config(cfg_path=config)
+        if verbose:
+            print("Found config")
     except FileNotFoundError:
-        pass
+        if verbose:
+            print("Found no config!")
 
 
 @cli.command()
@@ -23,8 +28,9 @@ def cli(context, config):
 def backup(context, do: bool, unique: bool):
     config: Config = context.obj["config"]
     fm = FileManager(config=config, key_file=config.key)
+
     fm.backup(config.backup_path, do=do, limit=None, unique=unique, exclude_list=config.exclude,
-              parent_id=config.parent_id, config=config)
+              config=config)
 
 
 @cli.command()
@@ -45,11 +51,15 @@ def restore(context, restore_path):
     bu = None
     for backup in backups:
         file_list = backup.get_files_list()
-        if backup.source == config.backup_path and file_list:
+        if os.path.normpath(backup.source) == os.path.normpath(config.backup_path) and file_list:
             bu = backup
             break
     navigator.navigate(bu, restoration_path=restore_path)
 
 
-if __name__ == "__main__":
+def main():
     cli(obj={})
+
+
+if __name__ == "__main__":
+    main()
