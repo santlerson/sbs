@@ -234,6 +234,8 @@ class FileManager:
 
             file = self.service.files().create(body=metadata, fields="id").execute()
             config.parent_id = file.get("id")
+        if not os.path.exists(config.log_dir):
+            os.makedirs(config.log_dir)
         log_path = os.path.join(config.log_dir, time.ctime())
         log_file = open(log_path, "w")
 
