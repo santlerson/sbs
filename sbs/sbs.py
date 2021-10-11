@@ -14,6 +14,7 @@ def cli(context, config, verbose):
     context.ensure_object(dict)
     try:
         context.obj["config"] = Config(cfg_path=config)
+        context.obj["cfg_path"]=config
         if verbose:
             print("Found config")
     except FileNotFoundError:
@@ -27,11 +28,13 @@ def cli(context, config, verbose):
 @click.pass_context
 def backup(context, do: bool, unique: bool):
     config: Config = context.obj["config"]
+    parent_id=config.parent_id
     fm = FileManager(config=config, key_file=config.key)
 
     fm.backup(config.backup_path, do=do, limit=None, unique=unique, exclude_list=config.exclude,
               config=config)
-
+    if not parent_id:
+        config.dump(context.obj["cfg_path"])
 
 @cli.command()
 def generate_config():

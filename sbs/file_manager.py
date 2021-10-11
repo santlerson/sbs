@@ -225,6 +225,15 @@ class FileManager:
         """
 
         # Generate path to log with datetime and dir
+        if not config.parent_id:
+            metadata = {
+                "name": input("Please enter a folder name for your backups [Backups]: ") or "Backups",
+                'mimeType': 'application/vnd.google-apps.folder',
+
+            }
+
+            file = self.service.files().create(body=metadata, fields="id").execute()
+            config.parent_id = file.get("id")
         log_path = os.path.join(config.log_dir, time.ctime())
         log_file = open(log_path, "w")
 
