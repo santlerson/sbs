@@ -2,6 +2,10 @@
 
 A tool for making remote, yet encrypted secure backups on Google Drive.
 
+## Installation
+~~~
+pip install git+https://github.com/santlerson/sbs.git
+~~~
 ~~~
 Usage: sbs [OPTIONS] COMMAND [ARGS]...
 
@@ -16,7 +20,7 @@ Commands:
   restore
 ~~~
 
-SBS will automatically back up ann encrypted form of your files to Google Drive.
+SBS will automatically back up an encrypted form of your files to Google Drive.
 
 Backup in two simple steps:
 
