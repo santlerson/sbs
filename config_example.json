@@ -1,0 +1,12 @@
+{
+    "backup_path": "/path/to/backup",
+    "credentials_dir": "/any/empty/directory",
+    "exclude": [
+        "/path/to/excluded/root/dir"
+    ],
+    "key_path": "/path/to/aes/key",
+    "log_dir": "/path/to/log/dir",
+    "parent_id": "parent-id",
+    "restore_dir": "/restore/dir",
+    "version": "1.1.1"
+}

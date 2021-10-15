@@ -254,12 +254,14 @@ class FileManager:
 
         file_list = []
         file_size = 0
+        backup = None
         for backup in backups:
             if os.path.normpath(backup.source) == os.path.normpath(
                     dir_path) and backup.get_files_list():
                 break
+        if backup is None:
+            unique = True
 
-        print("")
         log_file.write("Beginning file check\n")
         for root, dirs, files in os.walk("."):
             exclude = False

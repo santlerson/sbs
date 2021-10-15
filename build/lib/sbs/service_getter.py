@@ -3,6 +3,9 @@ import pickle
 from googleapiclient.discovery import build
 from google_auth_oauthlib.flow import InstalledAppFlow
 import google.auth.transport.requests as requests
+
+import pkg_resources
+
 from sbs.config import *
 
 creds = None
@@ -28,8 +31,10 @@ def get_service(config: Config):
         if creds and creds.expired and creds.refresh_token:
             creds.refresh(requests.Request())
         else:
-            flow = InstalledAppFlow.from_client_secrets_file(
-                os.path.join(config.credentials_dir, "credentials.json"), SCOPES)
+            stream: TextIO = pkg_resources.resource_stream(__name__, 'credentials.json')
+            client_config = json.loads(stream.read())
+            flow = InstalledAppFlow.from_client_config(
+                client_config, SCOPES)
             creds = flow.run_local_server(port=0)
         # Save the credentials for the next run
         with open(token_file, 'wb') as token:

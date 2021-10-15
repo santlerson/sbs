@@ -234,6 +234,8 @@ class FileManager:
 
             file = self.service.files().create(body=metadata, fields="id").execute()
             config.parent_id = file.get("id")
+        if not os.path.exists(config.log_dir):
+            os.makedirs(config.log_dir)
         log_path = os.path.join(config.log_dir, time.ctime())
         log_file = open(log_path, "w")
 
@@ -252,12 +254,14 @@ class FileManager:
 
         file_list = []
         file_size = 0
+        backup = None
         for backup in backups:
             if os.path.normpath(backup.source) == os.path.normpath(
                     dir_path) and backup.get_files_list():
                 break
+        if backup is None:
+            unique = True
 
-        print("")
         log_file.write("Beginning file check\n")
         for root, dirs, files in os.walk("."):
             exclude = False

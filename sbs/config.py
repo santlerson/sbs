@@ -4,7 +4,7 @@ import os
 import sys
 import pathlib
 
-VERSION = "1.1.1"
+VERSION = "1.2.3"
 
 EXAMPLE_BACKUP_PATH = "/path/to/backup"
 EXAMPLE_EXCLUSION = "/path/to/excluded/root/dir"

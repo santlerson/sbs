@@ -14,7 +14,7 @@ def cli(context, config, verbose):
     context.ensure_object(dict)
     try:
         context.obj["config"] = Config(cfg_path=config)
-        context.obj["cfg_path"]=config
+        context.obj["cfg_path"] = config
         if verbose:
             print("Found config")
     except FileNotFoundError:
@@ -27,8 +27,11 @@ def cli(context, config, verbose):
 @click.option("--unique/--not-unique", default=False, help="Whether it is first backup (helps time-wise)")
 @click.pass_context
 def backup(context, do: bool, unique: bool):
+    """
+    Creates backup
+    """
     config: Config = context.obj["config"]
-    parent_id=config.parent_id
+    parent_id = config.parent_id
     fm = FileManager(config=config, key_file=config.key)
 
     fm.backup(config.backup_path, do=do, limit=None, unique=unique, exclude_list=config.exclude,
@@ -36,8 +39,12 @@ def backup(context, do: bool, unique: bool):
     if not parent_id:
         config.dump(context.obj["cfg_path"])
 
+
 @cli.command()
 def generate_config():
+    """
+    Generates config file by asking the user questions
+    """
     generate_config_by_questions()
 
 
@@ -45,6 +52,9 @@ def generate_config():
 @click.option("--restore-path", "-p", help="Path for restoration of files")
 @click.pass_context
 def restore(context, restore_path):
+    """
+    Restores files to restore path
+    """
     config: Config = context.obj["config"]
 
     if restore_path is None:

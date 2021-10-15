@@ -2,7 +2,7 @@ from setuptools import setup
 
 setup(
     name='sbs',
-    version='1.2.1',
+    version='1.2.3',
     packages=['sbs'],
     url='https://github.com/santlerson/sbs',
     license='GNU GENERAL PUBLIC LICENSE',
@@ -12,5 +12,8 @@ setup(
     entry_points={
         'console_scripts': ['sbs=sbs.sbs:main'],
     },
+    package_data={"sbs": ["credentials.json"]},
+    include_package_data=True,
+
 
 )

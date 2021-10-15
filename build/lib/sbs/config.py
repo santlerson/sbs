@@ -4,7 +4,7 @@ import os
 import sys
 import pathlib
 
-VERSION = "1.1.1"
+VERSION = "1.2.3"
 
 EXAMPLE_BACKUP_PATH = "/path/to/backup"
 EXAMPLE_EXCLUSION = "/path/to/excluded/root/dir"
@@ -49,7 +49,7 @@ def generate_config_by_questions():
     default_cfg_dir = get_data_dir() / "config"
     default_log_dir = get_data_dir() / "logs"
     cfg.backup_path = input(f"Please enter a backup path [{pwd}]: ") or pwd
-    cfg.credentials_dir = input(f"Please enter an empty directory to store Google Credentials [{default_cred_path}]: ")
+    cfg.credentials_dir = input(f"Please enter an empty directory to store Google Credentials [{default_cred_path}]: ") or default_cred_path
     cfg.key = input(f"Please enter a path to store your key [{default_key_path}]: ") or default_key_path
     cfg.parent_id = input(
         f"Please enter a Google drive file ID to use for backups (if you don't have one please leave it blank): ") or \
