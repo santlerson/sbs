@@ -61,13 +61,13 @@ def generate_config_by_questions():
 
     if not os.path.exists(cfg_dir):
         os.makedirs(cfg_dir)
-    cfg_path = cfg_dir / "config.json"
+    cfg_path = os.path.join(cfg_dir, "config.json")
     if os.path.exists(str(cfg_path)):
         i = 0
         done = False
         while not done:
 
-            cfg_path = cfg_dir / f"config{i}.json"
+            cfg_path = os.path.join(cfg_dir , f"config{i}.json")
             if not os.path.exists(str(cfg_path)):
                 done = True
     cfg.dump(str(cfg_path))

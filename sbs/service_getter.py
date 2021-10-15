@@ -19,7 +19,8 @@ creds = None
 # If modifying these scopes, delete the file token.pickle.
 def get_service(config: Config):
     SCOPES = ['https://www.googleapis.com/auth/drive.metadata.readonly',
-              "https://www.googleapis.com/auth/drive"]
+              "https://www.googleapis.com/auth/drive",
+              "https://www.googleapis.com/auth/drive.appdata"]
     token_file = os.path.join(config.credentials_dir, "token.pickle")
     if os.path.exists(token_file):
         with open(token_file, 'rb') as token:

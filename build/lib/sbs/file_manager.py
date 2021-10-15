@@ -224,16 +224,18 @@ class FileManager:
         @param exclude_list: list of files to exclude (large, dynamic files for example)
         """
 
-        # Generate path to log with datetime and dir
         if not config.parent_id:
             metadata = {
                 "name": input("Please enter a folder name for your backups [Backups]: ") or "Backups",
                 'mimeType': 'application/vnd.google-apps.folder',
+                'parents': ['appDataFolder']
 
             }
 
             file = self.service.files().create(body=metadata, fields="id").execute()
             config.parent_id = file.get("id")
+        # Generate path to log with datetime and dir
+
         if not os.path.exists(config.log_dir):
             os.makedirs(config.log_dir)
         log_path = os.path.join(config.log_dir, time.ctime())
@@ -398,6 +400,9 @@ class FileManager:
 
                 log_file.close()
 
+    def migrate_to_app_data(self):
+        print(self.service.files().update(fileId=self.config.parent_id, addParents=['appDataFolder']).execute())
+        print("success")
     def list_backups(self):
 
         files = self.service.files().list(q="'{}' in parents".format(self.config.parent_id)).execute()['files']

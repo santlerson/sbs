@@ -33,7 +33,6 @@ def backup(context, do: bool, unique: bool):
     config: Config = context.obj["config"]
     parent_id = config.parent_id
     fm = FileManager(config=config, key_file=config.key)
-
     fm.backup(config.backup_path, do=do, limit=None, unique=unique, exclude_list=config.exclude,
               config=config)
     if not parent_id:
