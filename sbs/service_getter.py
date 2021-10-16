@@ -1,4 +1,6 @@
 from __future__ import print_function
+
+import os.path
 import pickle
 from googleapiclient.discovery import build
 from google_auth_oauthlib.flow import InstalledAppFlow
@@ -37,6 +39,8 @@ def get_service(config: Config):
                 client_config, SCOPES)
             creds = flow.run_local_server(port=0)
         # Save the credentials for the next run
+        if not os.path.exists(config.credentials_dir):
+            os.makedirs(config.credentials_dir)
         with open(token_file, 'wb') as token:
             pickle.dump(creds, token)
 

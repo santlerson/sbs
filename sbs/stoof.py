@@ -1,3 +1,5 @@
+import os.path
+
 from Cryptodome import Random
 import pickle
 from Cryptodome.Cipher import AES
@@ -48,11 +50,14 @@ class Cryptologor:
         """
         self.rand = Random.new()
         try:
+
             f = open(key_file, "rb")
             self.key = pickle.load(f)
 
             f.close()
         except IOError:
+            if not os.path.exists(os.path.dirname(key_file)):
+                os.makedirs(os.path.dirname(key_file))
             self.key = self.rand.read(KEY_LENGTH)
             with open(key_file, "wb") as f:
                 pickle.dump(self.key, f)
