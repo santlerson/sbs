@@ -25,16 +25,21 @@ def cli(context, config, verbose):
 @cli.command()
 @click.option("--do/--dont", default=True, help="Whether or not to do backup, if not, perform file check")
 @click.option("--unique/--not-unique", default=False, help="Whether it is first backup (helps time-wise)")
+@click.option("--limit", default=-1, help="Limit in bytes to backup size")
 @click.pass_context
-def backup(context, do: bool, unique: bool):
+def backup(context, do: bool, unique: bool, limit: int):
     """
     Creates backup
     """
     config: Config = context.obj["config"]
     parent_id = config.parent_id
     fm = FileManager(config=config, key_file=config.key)
-    fm.backup(config.backup_path, do=do, limit=None, unique=unique, exclude_list=config.exclude,
-              config=config)
+    if limit<0:
+        fm.backup(config.backup_path, do=do, limit=None, unique=unique, exclude_list=config.exclude,
+                  config=config)
+    else:
+        fm.backup(config.backup_path, do=do, limit=limit, unique=unique, exclude_list=config.exclude,
+                  config=config)
     if not parent_id:
         config.dump(context.obj["cfg_path"])
 

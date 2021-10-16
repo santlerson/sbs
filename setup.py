@@ -14,6 +14,15 @@ setup(
     },
     package_data={"sbs": ["credentials.json"]},
     include_package_data=True,
-
+    install_requires=
+"""
+click>=8.0.3
+tqdm>=4.62.3
+httplib2>=0.20.1
+google-auth-httplib2
+google-auth-oauthlib
+google-api-python-client
+pycryptodomex
+""".splitlines()
 
 )
