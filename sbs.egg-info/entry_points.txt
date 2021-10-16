@@ -1,0 +1,3 @@
+[console_scripts]
+sbs = sbs.sbs:main
+
