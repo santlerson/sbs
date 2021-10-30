@@ -74,6 +74,7 @@ class Backup:
                     json_data = self.c.decrypt(fh.read()).decode("UTF-8")
                     data = json.JSONDecoder().decode(json_data)
                     self.files_list = sorted(data.get("files"), key=lambda file: file.get("source"))
+                    print(self.files_list)
         return self.files_list
 
     def find_file_by_digest(self, digest: str):

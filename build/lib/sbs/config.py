@@ -4,7 +4,7 @@ import os
 import sys
 import pathlib
 
-VERSION = "1.2.3"
+VERSION = "0.2.6"
 
 EXAMPLE_BACKUP_PATH = "/path/to/backup"
 EXAMPLE_EXCLUSION = "/path/to/excluded/root/dir"
@@ -96,11 +96,11 @@ class Config:
             self.backup_path = m.get("backup_path")
             self.restore = m.get("restore_dir")
             self.credentials_dir = m.get("credentials_dir")
-            if self.version >= "1.0.1":
-                self.key = m.get("key_path")
-                self.parent_id = m.get("parent_id")
-            if self.version>="1.1.1":
-                self.log_dir=m.get("log_dir")
+
+            self.key = m.get("key_path")
+            self.parent_id = m.get("parent_id")
+
+            self.log_dir=m.get("log_dir")
 
     def to_map(self):
         """

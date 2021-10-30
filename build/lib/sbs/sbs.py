@@ -68,7 +68,6 @@ def restore(context, restore_path):
     bu = None
     for backup in backups:
         file_list = backup.get_files_list()
-        print(file_list)
         if os.path.normpath(backup.source) == os.path.normpath(config.backup_path) and file_list:
             bu = backup
             break

@@ -391,7 +391,7 @@ class FileManager:
                             total = progress
                     except Exception as e:
                         bar.write(str(e))
-                bar.update((1 - total))
+                bar.update((1 - total)*enc_json_data_len)
                 bar.close()
                 # if verbose:
                 #     for file in json_list:
