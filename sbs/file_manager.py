@@ -64,7 +64,7 @@ class FileManager:
         if key_file:
             self.c = Cryptologor(key_file=key_file)
         else:
-            self.c = Cryptologor()
+            self.c = Cryptologor(key_file=config.key)
         self.service = get_service(config)
         self.config = config
 
@@ -211,7 +211,7 @@ class FileManager:
         if close_bar:
             bar.close()
 
-    def backup(self, dir_path, exclude_list, config, do=False, unique=False, limit=5 * 10 ** 9,
+    def backup(self, dir_path, exclude_list, config, do=False, unique=False, limit=5 * 10 ** 9, previous_backup: Backup=None
                ):
         """
         Performs backup of particular directory to Google Drive.
@@ -256,13 +256,16 @@ class FileManager:
 
         file_list = []
         file_size = 0
-        backup = None
-        for backup in backups:
-            if os.path.normpath(backup.source) == os.path.normpath(
-                    dir_path) and backup.get_files_list():
-                break
-        if backup is None or backup.get_files_list() is None:
-            unique = True
+        if not previous_backup:
+            backup = None
+            for backup in backups:
+                if os.path.normpath(backup.source) == os.path.normpath(
+                        dir_path) and backup.get_files_list():
+                    break
+            if backup is None or backup.get_files_list() is None:
+                unique = True
+        else:
+            backup=previous_backup
 
         log_file.write("Beginning file check\n")
         for root, dirs, files in os.walk("."):

@@ -22,6 +22,7 @@ class Backup:
         self.files_list = None
         self.files_list_by_digest = None
         self.pointer = 0
+        self.total_size = None
 
     def __repr__(self):
         return "<Backup of {} uploaded {}>".format(self.source, ctime(self.time))
@@ -93,6 +94,16 @@ class Backup:
             print("\nSorting digest list")
             self.files_list_by_digest = sorted(self.get_files_list(), key=lambda file: file.get("digest"))
             return self.files_list_by_digest
+
+    def get_full_backup_size(self):
+        if self.total_size:
+            return self.total_size
+        else:
+            self.total_size = 0
+            for file in self.get_files_list():
+                for piece in file.get("pieces"):
+                    self.total_size += piece.get("size")
+        return self.total_size
 
 
 def bin_search(arr: list, path: str, start=0, end=None, key=lambda file: file.get('source'), n=0):
