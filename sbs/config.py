@@ -70,6 +70,7 @@ def generate_config_by_questions():
             cfg_path = os.path.join(cfg_dir , f"config{i}.json")
             if not os.path.exists(str(cfg_path)):
                 done = True
+            i+=1
     cfg.dump(str(cfg_path))
     print(f"Success! Config dumped at {cfg_path}!")
 
