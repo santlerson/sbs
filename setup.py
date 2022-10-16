@@ -2,7 +2,7 @@ from setuptools import setup
 
 setup(
     name='sbs',
-    version='0.2.8',
+    version='0.2.9',
     packages=['sbs'],
     url='https://github.com/santlerson/sbs',
     license='GNU GENERAL PUBLIC LICENSE',

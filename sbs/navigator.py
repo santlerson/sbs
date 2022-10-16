@@ -72,16 +72,22 @@ class Navigator:
         elif i == option_whole_dir:
             self.download_whole_dir(bu, file_tree, restoration_path=restoration_path)
 
-    def download_whole_dir(self, bu: Backup, file_tree: File, restoration_path=None):
-        size = self.get_sizes_of_dir(bu, file_tree)
-        bar = tqdm(total=size, unit_scale=True, unit="B", dynamic_ncols=True)
+    def download_whole_dir(self, bu: Backup, file_tree: File, restoration_path=None, bar=None):
+        close_bar=False
+        if bar is None:
+            size = self.get_sizes_of_dir(bu, file_tree)
+
+            bar = tqdm(total=size, unit_scale=True, unit="B", dynamic_ncols=True)
+            close_bar=True
         for child in file_tree.children:
             if child.is_dir:
-                self.download_whole_dir(bu, child, restoration_path=restoration_path)
+                self.download_whole_dir(bu, child, restoration_path=restoration_path, bar=bar)
             else:
 
                 self.fm.download_file(bin_search(bu.get_files_list(), path=child.get_full_path()), bar=bar,
                                       restoration_path=restoration_path)
+        if close_bar:
+            bar.close()
 
     def get_sizes_of_dir(self, bu: Backup, file_tree: File):
         total_size = 0
