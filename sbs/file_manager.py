@@ -177,11 +177,11 @@ class FileManager:
 
         if os.path.exists(path) and not os.path.isdir(path):
             sha = SHA256.new()
-            with open(path, "rb") as file:
-                data = file.read(PIECE_SIZE)
+            with open(path, "rb") as f:
+                data = f.read(PIECE_SIZE)
                 while(data):
                     sha.update(data)
-                    data=file.read(PIECE_SIZE)
+                    data=f.read(PIECE_SIZE)
             if base64.b64encode(sha.digest()).decode("UTF-8")==file['digest']:
                 if bar is not None:
                     bar.update(file['total_size'])
