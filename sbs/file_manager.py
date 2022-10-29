@@ -175,7 +175,7 @@ class FileManager:
             os.makedirs(restoration_path)
         os.chdir(restoration_path)
 
-        if os.path.exists(path) and not os.isdir(path):
+        if os.path.exists(path) and not os.path.isdir(path):
             sha = SHA256.new()
             with open(path, "rb") as file:
                 data = file.read(PIECE_SIZE)
