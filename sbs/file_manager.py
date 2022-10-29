@@ -170,9 +170,22 @@ class FileManager:
         # If no path is passed, find path in file map
         if path is None:
             path = file['source']
+
         if not os.path.exists(restoration_path):
             os.makedirs(restoration_path)
         os.chdir(restoration_path)
+
+        if os.path.exists(path) and not os.isdir(path):
+            sha = SHA256.new()
+            with open(path, "rb") as file:
+                data = file.read(PIECE_SIZE)
+                while(data):
+                    sha.update(data)
+                    data=file.read(PIECE_SIZE)
+            if base64.b64encode(sha.digest()).decode("UTF-8")==file['digest']
+                if bar is not None:
+                    bar.update(file['total_size'])
+                return
 
         # Make dirs leading to path
         if os.path.dirname(path) and not os.path.exists(os.path.dirname(path)):
