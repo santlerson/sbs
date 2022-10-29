@@ -196,11 +196,19 @@ class FileManager:
             done = False
             total = 0.0
             while done is False:
-                status, done = downloader.next_chunk()
-                if status:
-                    progress = status.progress()
-                    bar.update(size * (progress - total))
-                    total = progress
+                try:
+                    
+                    status, done = downloader.next_chunk()
+                    if status:
+                        progress = status.progress()
+                        bar.update(size * (progress - total))
+                        total = progress
+                except (httplib2.ServerNotFoundError, BrokenPipeError, TimeoutError, ConnectionResetError, OSError,
+                        timeout, HttpError, TransportError):
+                    seconds = random.randint(30, 91)
+                    bar.write("Having internet troubles, waiting, {} seconds".format(seconds))
+                    time.sleep(seconds)
+                    
             # Go to start of byteio to begin reading
             fh.seek(0)
             data = fh.read()
