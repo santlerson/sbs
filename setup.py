@@ -2,7 +2,7 @@ from setuptools import setup
 
 setup(
     name='sbs',
-    version='0.2.13',
+    version='0.2.14',
     packages=['sbs'],
     url='https://github.com/santlerson/sbs',
     license='GNU GENERAL PUBLIC LICENSE',
@@ -10,7 +10,7 @@ setup(
     author_email='shmooseyantlerson@gmail.com',
     description='A python tool for creating secure and encrypted backups',
     entry_points={
-        'console_scripts': ['sbs=sbs.sbs:main'],
+        'console_scripts': ['sbs=sbs.sbs_cli:main'],
     },
     package_data={"sbs": ["credentials.json"]},
     include_package_data=True,

@@ -85,10 +85,9 @@ def restore(context, restore_path, debug: bool):
     backups = navigator.fm.list_backups()
 
     bu = None
-    for backup in backups:
-        file_list = backup.get_files_list()
-        if os.path.normpath(backup.source) == os.path.normpath(config.backup_path) and file_list:
-            bu = backup
+    for back_up in backups:
+        if back_up.get_files_list():
+            bu = back_up
             break
     navigator.navigate(bu, restoration_path=restore_path)
 

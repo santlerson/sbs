@@ -10,7 +10,7 @@ sbs/file.py
 sbs/file_manager.py
 sbs/menu.py
 sbs/navigator.py
-sbs/sbs.py
+sbs/sbs_cli.py
 sbs/service_getter.py
 sbs/sha.py
 sbs/stoof.py

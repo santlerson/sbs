@@ -1,2 +1,2 @@
 [console_scripts]
-sbs = sbs.sbs:main
+sbs = sbs.sbs_cli:main

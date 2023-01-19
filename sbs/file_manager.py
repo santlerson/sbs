@@ -17,7 +17,7 @@ from sbs.sha import digest
 import httplib2
 from sbs.service_getter import get_service
 from sbs.backup import Backup
-
+from sbs.config import Config
 from sbs.values import *
 
 from threading import Thread
@@ -232,7 +232,8 @@ class FileManager:
         if close_bar:
             bar.close()
 
-    def backup(self, dir_path, exclude_list, config, do=False, unique=False, limit=5 * 10 ** 9, previous_backup: Backup=None
+    def backup(self, dir_path, exclude_list, config: Config, do=False, unique=False, limit=5 * 10 ** 9,
+               previous_backup: Backup = None
                ):
         """
         Performs backup of particular directory to Google Drive.
@@ -280,8 +281,7 @@ class FileManager:
         if not previous_backup:
             backup = None
             for backup in backups:
-                if os.path.normpath(backup.source) == os.path.normpath(
-                        dir_path) and backup.get_files_list():
+                if backup.get_files_list():
                     break
             if backup is None or backup.get_files_list() is None:
                 unique = True
@@ -428,6 +428,5 @@ class FileManager:
 
 
     def list_backups(self):
-
         files = self.service.files().list(spaces="appDataFolder", q=f"'{self.config.parent_id}' in parents").execute()['files']
         return [Backup(self.service, file,config=self.config, c=self.c) for file in files]

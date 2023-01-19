@@ -1,13 +1,9 @@
 Metadata-Version: 2.1
 Name: sbs
-Version: 0.2.8
+Version: 0.2.14
 Summary: A python tool for creating secure and encrypted backups
 Home-page: https://github.com/santlerson/sbs
 Author: santlerson
 Author-email: shmooseyantlerson@gmail.com
 License: GNU GENERAL PUBLIC LICENSE
-Platform: UNKNOWN
 License-File: LICENSE
-
-UNKNOWN
-
