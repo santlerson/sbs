@@ -79,7 +79,7 @@ class Config:
 
 
     def __init__(self, cfg_path=None):
-
+        self.cfg_path = cfg_path
         if cfg_path is None:
             self.exclude: List[AnyStr] = [EXAMPLE_EXCLUSION]
             self.backup_path = EXAMPLE_BACKUP_PATH
@@ -97,7 +97,6 @@ class Config:
             self.backup_path = m.get("backup_path")
             self.restore = m.get("restore_dir")
             self.credentials_dir = m.get("credentials_dir")
-
             self.key = m.get("key_path")
             self.parent_id = m.get("parent_id")
 
@@ -119,12 +118,12 @@ class Config:
             "credentials_dir":str(self.credentials_dir)
         }
 
-    def dump(self, path="config.json"):
+    def dump(self, path=None):
         """
         Dump config object to config file to be retrieved later.
         @param path: path to dump file to
         """
-        json.dump(self.to_map(), open(str(path), "w"), indent=4, sort_keys=True)
+        json.dump(self.to_map(), open(str(path or self.cfg_path), "w"), indent=4, sort_keys=True)
 
 
 if __name__ == "__main__":

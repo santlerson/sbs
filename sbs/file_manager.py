@@ -23,19 +23,6 @@ from sbs.values import *
 from threading import Thread
 
 
-def check_backups(backup_list: List[Backup], path: str) -> map:
-    """
-    Checks all previous backups for file using digest (including those not from source directory)
-    @param backup_list: List of backups
-    @param path: Path to file on local machine
-    @return: File (map) or None
-    """
-    d = digest(path)
-    for backup in backup_list:
-        file = backup.find_file_by_digest(d)
-        if file:
-            return file.copy()
-    return None
 
 
 def check_latest_backup_without_hash_scan(backup: Backup, relative_path: str) -> map:
@@ -256,6 +243,7 @@ class FileManager:
 
             file = self.service.files().create(body=metadata, fields="id").execute()
             config.parent_id = file.get("id")
+            config.dump()
         # Generate path to log with datetime and dir
 
         if not os.path.exists(config.log_dir):
@@ -289,7 +277,7 @@ class FileManager:
             backup=previous_backup
 
         log_file.write("Beginning file check\n")
-        for root, dirs, files in os.walk("."):
+        for root, dirs, files in os.walk(".", ):
             exclude = False
             for exclusion in exclude_list:
 
@@ -301,7 +289,11 @@ class FileManager:
                     exclude = True  # continue in loop, skip this root directory
             # if finish: break
             if exclude:
+                # make sure we don't go deeper in tree
+                dirs[:] = []
+                files[:] = []
                 continue
+
             for file in files:
                 full_path = os.path.join(root, file)
                 if os.path.exists(full_path):
@@ -324,7 +316,8 @@ class FileManager:
                         json_list.append(backup_file)
                     else:
                         # print("!",end=" ")
-                        log_file.write("{} not found... adding to backup\n".format(full_path))
+                        log_file.write(
+                            "{} not found... adding to backup\n".format(full_path.encode('utf-8', 'replace').decode()))
                         current_file_size = os.path.getsize(full_path)
                         if limit and file_size + current_file_size > limit:
                             finish = True

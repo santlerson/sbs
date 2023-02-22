@@ -21,7 +21,7 @@ class Navigator:
         """
         if file_tree is None:
             file_list = bu.get_files_list()
-            file_tree = File.from_path_list([f.get("source") for f in file_list])
+            file_tree = File.from_path_list([f for f in file_list.keys()])
         misc_options = [
             "Download whole directory {}".format(color(file_tree.get_full_path(), CYAN)),
             "{} {}".format(color("<--", WARNING), color(file_tree.parent.name, CYAN)) if file_tree.parent else None
@@ -62,7 +62,7 @@ class Navigator:
                 self.navigate(bu, file_tree=child, restoration_path=restoration_path)
             else:
 
-                f = bin_search(bu.get_files_list(), path=child.get_full_path())
+                f = bu.get_files_list().get(child.get_full_path())
                 if restoration_path:
                     self.fm.download_file(f, path=child.name, restoration_path=restoration_path)
                 else:
@@ -84,7 +84,7 @@ class Navigator:
                 self.download_whole_dir(bu, child, restoration_path=restoration_path, bar=bar)
             else:
 
-                self.fm.download_file(bin_search(bu.get_files_list(), path=child.get_full_path()), bar=bar,
+                self.fm.download_file(bu.get_files_list().get(child.get_full_path()), bar=bar,
                                       restoration_path=restoration_path)
         if close_bar:
             bar.close()
@@ -95,6 +95,6 @@ class Navigator:
             if child.is_dir:
                 total_size += self.get_sizes_of_dir(bu, child)
             else:
-                file_resource = bin_search(bu.get_files_list(), path=child.get_full_path())
+                file_resource = bu.get_files_list().get(child.get_full_path())
                 total_size += file_resource.get("total_size")
         return total_size

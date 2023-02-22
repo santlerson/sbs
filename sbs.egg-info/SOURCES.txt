@@ -2,6 +2,7 @@ LICENSE
 README.md
 setup.py
 sbs/__init__.py
+sbs/__main__.py
 sbs/backup.py
 sbs/colors.py
 sbs/config.py
@@ -10,7 +11,6 @@ sbs/file.py
 sbs/file_manager.py
 sbs/menu.py
 sbs/navigator.py
-sbs/sbs_cli.py
 sbs/service_getter.py
 sbs/sha.py
 sbs/stoof.py

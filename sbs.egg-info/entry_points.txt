@@ -1,2 +1,3 @@
 [console_scripts]
 sbs = sbs.sbs_cli:main
+
